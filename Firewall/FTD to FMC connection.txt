@@ -23,11 +23,3 @@ firepower# connect ftd
 
 ***** How to change FTD Firewall mode to Router mode
 > configure firewall routed
-
----------------------Need to Know about the topic------------------------------
-Inline IPS
-
-Passive IPS/IDS
-Physical Interface Mode(Passive, Erspan)
-Inline Tap
-Inline Pair
