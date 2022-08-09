@@ -1,0 +1,17 @@
+R1(config)# ip local pool PPTP-Pool 192.168.0.20 192.168.0.25
+R1(config)# username firewall password gfk$251!
+
+
+R1# configure terminal
+R1(config)# vpdn enable 
+R1(config)# vpdn-group 1 
+R1(config-vpdn)# accept-dialin
+R1(config-vpdn-acc-in)# protocol pptp 
+R1(config-vpdn-acc-in)# virtual-template 1 
+R1(config-vpdn-acc-in)# exit
+
+R1(config)# interface Virtual-Template1 
+R1(config-if)# ip unnumbered FastEthernet 0/0 
+R1(config-if)# peer default ip address pool PPTP-Pool
+R1(config-if)# no keepalive
+R1(config-if)# ppp authentication ms-chap ms-chap-v2

@@ -1,0 +1,7 @@
+ip domain-name rawscripter.net
+crypto key generate rsa
+1024
+line vty 0 4
+transport input ssh
+login local
+username admin password C1sc0@123

@@ -1,0 +1,8 @@
+1. Lowes cost = Best route
+
+2. The range is from 0 to 255. 0 means that the interface does not involve in the DR election.
+
+The following command configures a priority value on an interface.
+
+Router(config)#interface interface-number
+Router(config-if)#ip ospf priority priority-value

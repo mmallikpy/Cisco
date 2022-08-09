@@ -1,0 +1,5 @@
+interface tunnel 1
+tunnel source 1.1.1.1
+tunnel destination 1.1.1.2
+exit
+ip route 172.16.18.0 255.255.255.0 1.1.1.2

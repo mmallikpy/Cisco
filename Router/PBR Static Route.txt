@@ -1,0 +1,60 @@
+## PBR Configuration for Static Route ##.
+
+Note: 
+	2 ISP Link3 and BOL
+	2 IP Block
+
+
+
+
+
+ip access-list extended Link3
+ permit ip 192.168.199.0 0.0.0.255 any
+ 
+!
+ip access-list extended BOL
+ permit ip 192.168.200.0 0.0.0.255 any
+ 
+!
+route-map PBR permit 10
+ match ip address Link3
+ set ip next-hop 192.168.5.1 192.168.222.1
+!
+route-map PBR permit 20
+ match ip address BOL
+ set ip next-hop 192.168.222.1 192.168.5.1
+!
+route-map PBR permit 100
+!
+interface FastEthernet2/0
+ ip policy route-map PBR
+!
+end
+------------------------For Better Undrestanding---------------------------------------------------------
+interface FastEthernet0/0
+ description ##LINK3 ##
+ ip address 192.168.5.3 255.255.255.0
+ ip nat outside
+
+interface FastEthernet2/1
+ description ##BOL ##
+ ip address 192.168.222.2 255.255.255.0
+ ip nat outside
+
+interface FastEthernet2/0
+ description ##LAN ##
+ ip address 192.168.200.1 255.255.255.0 secondary
+ ip address 192.168.199.1 255.255.255.0
+ ip nat inside
+ ip policy route-map PBR
+
+
+
+ip nat inside source list BOL interface FastEthernet2/1 overload
+ip nat inside source list Link3 interface FastEthernet0/0 overload
+
+ip route 0.0.0.0 0.0.0.0 192.168.5.1
+ip route 0.0.0.0 0.0.0.0 192.168.222.1 10
+
+
+

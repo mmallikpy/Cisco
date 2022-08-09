@@ -1,0 +1,28 @@
+Note: {
+Site 1 Cisco:
+--------------------------------------------------- 
+WAN IP: 10.10.10.2
+LAN IP: 192.168.10.0/24
+
+WAN Interface: FastEthernet0/0
+
+Key: firewallcx
+
+Site 2 Mikrotik:
+--------------------------------------------------- 
+WAN IP: 10.10.11.2
+LAN IP: 192.168.2.0/24
+
+WAN Interface: Ether1
+
+Key: firewallcx
+
+}
+
+
+/ip ipsec proposal
+add auth-algorithms=md5 enc-algorithms=3des name=IPSEC
+/ip ipsec peer
+add address=10.10.10.2/32 dh-group=modp1024 enc-algorithm=3des hash-algorithm=md5 nat-traversal=no secret=firewallcx
+/ip ipsec policy
+add dst-address=192.168.10.0/24 proposal=IPSEC sa-dst-address=10.10.10.2 sa-src-address=10.10.11.2 src-address=192.168.2.0/24 tunnel=yes

@@ -1,0 +1,65 @@
+interface FastEthernet0/0
+ description ##ISP_1##
+ ip address 192.168.5.3 255.255.255.0
+ ip nat outside
+ duplex full
+!
+
+interface FastEthernet1/1
+ description #LAN_1#
+ ip address 192.168.99.1 255.255.255.252
+ ip nat inside
+ ip policy route-map PBR
+ speed auto
+ duplex auto
+!
+interface FastEthernet2/0
+ description #LAN_2#
+ ip address 192.168.200.1 255.255.255.0 secondary
+ ip address 192.168.199.1 255.255.255.0
+ ip nat inside
+ ip policy route-map PBR
+ speed auto
+ duplex auto
+!
+interface FastEthernet2/1
+ description ##ISP_2##
+ ip address 192.168.222.2 255.255.255.0
+ ip nat outside
+ speed auto
+ duplex auto
+
+
+
+ip nat inside source list 150 interface FastEthernet0/0 overload oer
+ip nat inside source list 151 interface FastEthernet2/1 overload oer
+
+
+ip sla 1
+ icmp-echo 192.168.5.1 source-interface FastEthernet0/0
+ threshold 2
+ip sla schedule 1 life forever start-time now
+
+ip sla 2
+ icmp-echo 192.168.222.1 source-interface FastEthernet2/1
+ threshold 2
+ip sla schedule 2 life forever start-time now
+
+access-list 150 permit ip any any
+access-list 151 permit ip any any
+!
+route-map PBR permit 1
+ match ip address PBR_1
+ set ip next-hop 192.168.5.1
+!
+route-map PBR permit 2
+ match ip address PBR_2
+ set ip next-hop 192.168.222.1
+!
+route-map PBR permit 100
+
+
+
+track 1 ip sla 1 reachability
+!
+track 2 ip sla 2 reachability

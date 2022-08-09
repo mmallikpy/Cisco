@@ -1,0 +1,53 @@
+Note: {
+Site 1 Cisco:
+--------------------------------------------------- 
+WAN IP: 10.10.10.2
+LAN IP: 192.168.10.0/24
+
+WAN Interface: FastEthernet0/0
+
+Key: firewallcx
+
+Site 2 Mikrotik:
+--------------------------------------------------- 
+WAN IP: 10.10.11.2
+LAN IP: 192.168.2.0/24
+
+WAN Interface: Ether1
+
+Key: firewallcx
+
+}
+
+
+crypto isakmp policy 1
+ encr 3des
+ hash md5
+ authentication pre-share
+ group 2
+!
+!
+crypto isakmp key firewallcx address 10.10.11.2
+!
+!
+crypto ipsec transform-set TS esp-3des esp-md5-hmac
+ mode tunnel
+!
+!
+ip access-list extended vpn-traffic
+ permit ip 192.168.10.0 0.0.0.255 192.168.2.0 0.0.0.255
+!
+!
+crypto map CMAP 10 ipsec-isakmp
+ set peer 10.10.11.2
+ set transform-set TS
+ match address vpn-traffic
+
+
+
+
+interface FastEthernet0/0
+ ip address 10.10.10.2 255.255.255.252
+ duplex full
+ crypto map CMAP
+

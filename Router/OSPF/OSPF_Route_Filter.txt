@@ -1,0 +1,16 @@
+--------------------OSPF-Route-Filter----------------------------------------------------------
+ip prefix-list static-to-ospf seq 10 permit 222.222.222.0/24
+ip prefix-list static-to-ospf seq 20 permit 10.10.10.0/24
+ip prefix-list static-to-ospf seq 30 permit 192.168.3.0/24
+ip prefix-list static-to-ospf seq 40 permit 192.168.17.0/24
+ip prefix-list static-to-ospf seq 50 permit 192.168.100.0/24
+ip prefix-list static-to-ospf seq 60 permit 192.168.177.0/24
+ip prefix-list static-to-ospf seq 70 permit 192.168.180.0/24
+ip prefix-list static-to-ospf seq 80 permit 192.168.182.0/24
+ip prefix-list static-to-ospf seq 90 permit 192.168.14.0/24
+
+router ospf 100
+ redistribute static subnets route-map static-to-ospf
+
+route-map static-to-ospf permit 10
+ match ip address prefix-list static-to-ospf

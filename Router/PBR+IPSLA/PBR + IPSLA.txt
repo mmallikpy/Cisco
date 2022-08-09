@@ -1,0 +1,39 @@
+ip access-list extended BracNet
+ permit ip 172.16.0.0 0.0.0.255
+!
+ip access-list extended Amra
+ permit ip 172.16.1.0 0.0.0.255 any
+!
+route-map PBR permit 10
+ match ip address BracNet
+ set ip next-hop 10.10.10.13 10.10.10.17
+!
+route-map PBR permit 20
+ match ip address Amra
+ set ip next-hop 10.10.10.17 10.10.10.13
+!
+route-map PBR permit 100
+!
+interface FastEthernet1/0
+ ip policy route-map PBR
+!
+end
+
+
+[Note: 
+Router Gateway : 10.10.10.1 
+Router WAN Interface: FastEthernet0/0 
+]
+
+ip sla 1
+icmp-echo 10.10.10.1 source-interface FastEthernet0/0
+
+timeout 100
+threshold 2
+frequency 3
+ip sla schedule 1 life forever start-time now
+
+
+R1(config)# track 1 ip sla 1 reachability
+
+R1(config)# ip route 0.0.0.0 0.0.0.0 10.10.10.1 track 1

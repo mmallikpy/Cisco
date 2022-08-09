@@ -1,0 +1,33 @@
+FTD End Command:
+----------------
+FTD management IP : 192.168.1.3
+FTD Subnet Mask	  : 255.255.255.0
+FTD Gateway	  : 192.168.1.1
+
+FMC IP		  : 192.168.1.2
+Secret of FMC	  : 123456@cisco
+
+firepower# connect ftd
+>configure network ipv4 manual 192.168.1.3 255.255.255.0 192.168.1.1
+>configure manager add 192.168.1.2 123456@cisco
+
+
+***** Verify the network settings you configured for the FTD with the next command.
+> show network
+
+***** Verify the management type you configured for the FTD with the next command.
+> show managers
+
+***** How to check FTD running mode
+> show firewall
+
+***** How to change FTD Firewall mode to Router mode
+> configure firewall routed
+
+---------------------Need to Know about the topic------------------------------
+Inline IPS
+
+Passive IPS/IDS
+Physical Interface Mode(Passive, Erspan)
+Inline Tap
+Inline Pair

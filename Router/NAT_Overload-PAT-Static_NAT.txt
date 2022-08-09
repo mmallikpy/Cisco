@@ -1,0 +1,54 @@
+***** Overloading *****
+
+interface FastEthernet0/0
+ description ##WAN##
+ ip address 192.168.5.3 255.255.255.0
+ ip nat outside
+
+
+interface FastEthernet1/1
+ description #LAN#
+ ip address 192.168.99.1 255.255.255.252
+ ip nat inside
+
+R1(config)# access-list 1 permit 192.168.18.0 0.0.0.255
+R1(config)# ip nat inside source list 1 interface FastEthernet0/0 overload
+
+========================================================================================
+ 
+***** Static NAT /or/ 1 To 1 IP NAT *****
+
+
+interface FastEthernet0/0
+ description ##WAN##
+ ip address 192.168.5.3 255.255.255.0
+ ip nat outside
+
+
+interface FastEthernet1/0
+ description #EMAIL-SERVER#
+ ip address 192.168.100.1 255.255.255.252
+ ip nat inside
+
+
+R1(config)# ip nat inside source static 192.168.100.2 192.168.5.5
+
+[Note: Server Address: 192.168.100.2;  Public IP: 192.168.5.5]
+
+========================================================================================
+***** Port Address Translation *****
+
+interface FastEthernet0/0
+ description ##WAN##
+ ip address 192.168.5.3 255.255.255.0
+ ip nat outside
+
+
+interface FastEthernet1/1
+ description #LAN#
+ ip address 192.168.99.1 255.255.255.252
+ ip nat inside
+
+R1(config)# ip nat inside source static tcp 192.168.18.2 80 192.168.5.3 80
+
+[Note: Server IP 192.168.18.2; Public IP: 192.168.5.3]

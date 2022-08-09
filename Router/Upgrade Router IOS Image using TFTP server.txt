@@ -1,0 +1,33 @@
+How to upgrade Router IOS Image using TFTP server ?
+BACKUP REQUIRED:
+======================
+copy flash:(Old IOS Image) tftp:
+
+Step : 2
+=======================================
+Delete IOS :
+-----------------------
+Delete flash:(Old IOS Image)
+
+Step 3 :
+=======================================
+Upgrade IOS :
+-----------------
+copy  tftp: flash:
+tftp IP :XXX.XXX.XXX.XXX
+
+Sourcename :(New IOS image file name)--Stored in TFTP Root directory.
+Designation name :
+enter
+
+Step 4 :
+=======================================
+To Verify the MD5 :
+--------------------------
+verify /md5 flash: (New IOS image file name)
+compare the MD5 version using winMd5Sum if both are same then ok
+
+Step 5 :Set Boot path 
+=======================================
+configure terminal
+boot system flash: (New IOS image file name)

@@ -1,0 +1,15 @@
+BGP inbound and outbound traffic
+1. Local Preference is used to manipulate traffic going out of your Autonomous System. This attribute is only exchanged with IBGP peers and therefore has local significance to your 
+Autonomous System.
+
+2. The Weight attribute is also used to manipulate traffic going out of your Autonomous System but this attribute is local to the router on which it is configured and is not exchanged 
+with any IBGP or EBGP peers.
+
+3. A router uses the AS_PATH attribute in case of ties between the weight and local preference attributes and the route not being locally originated. When this attribute is used to select
+a particular route you are basically controlling traffic going out of your Autonomous System.
+
+When you are multi homed to two different providers it is sometimes required to prefer one provider's link for some incoming traffic. In such cases a normal practise is to manipulate the 
+AS_PATH attribute thereby making one path seem more attractive than the other (shorter AS_PATH). So in such circumstances you are using AS_PATH to manipulate traffic coming into your AS.
+
+4. Another attribute that is used to manipulate incoming traffic is called MED (Multi-Exit Discriminator). However, an EBGP peer receiving it will only share it with IBGP peers and will 
+not forward it to another AS. This means that you can basically use this attribute for influencing traffic between two directly connected autonomous systems.

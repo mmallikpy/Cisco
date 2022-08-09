@@ -1,0 +1,27 @@
+rommon 1>
+rommon 1>set
+rommon 2>IP_ADDRESS=10.0.0.1
+rommon 3>IP_SUBNET_MASK=255.0.0.0
+rommon 4>DEFAULT_GATEWAY=10.0.0.10
+rommon 5>TFTP_SERVER=10.0.0.10
+rommon 6>TFTP_FILE=c1900-universalk9-mz.SPA.154-3.M4.bin       [You need to use the image file according to router model]
+rommon 7>tftpdnld
+
+Do you want to continue y/n:  y
+
+
+***********after upload the image successfully then follow the next step***********
+
+
+rommon 8>reset
+
+
+
+
+********* After successfully load IOS image***********
+
+router>enable
+Router#config t
+Router(config)#config-register 0x2102
+Router(config)#do wr
+Router(config)#do reload
