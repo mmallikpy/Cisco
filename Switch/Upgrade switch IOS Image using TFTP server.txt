@@ -1,0 +1,37 @@
+How to upgrade Switch IOS Image using TFTP server ?
+BACKUP REQUIRED:
+======================
+#copy flash:(Old IOS Image) tftp:
+
+Step : 2
+=======================================
+Delete IOS :
+-----------------------
+#delete flash:(Old IOS Image)
+
+Step 3 :
+=======================================
+Upload Upgrade IOS :
+-----------------
+#copy  tftp: flash:
+tftp IP :XXX.XXX.XXX.XXX
+
+Sourcename :(New IOS image file name)--Stored in TFTP Root directory.
+Designation name :
+enter
+
+Step 4 :
+=======================================
+To Verify the MD5 :
+--------------------------
+#verify /md5 flash: (New IOS image file name)
+compare the MD5 version using winMd5Sum if both are same then ok
+
+Step 5 : How much IOS are available in device flash
+=======================================
+#show flash: | include .bin
+
+Step 6 :Set Boot path 
+=======================================
+#configure terminal
+#boot system flash: (New IOS image file name)
