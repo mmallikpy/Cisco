@@ -1,0 +1,13 @@
+=> Copy IOS from USB
+NEX-9K# copy usb2: bootflash:
+
+=> Verify the os is uploded or not
+NEX-9K# dir bootflash:
+
+=> At this point it is recommended to perform an impact test on the software install
+NEX-9K# show install all impact nxos nxos.7.0.3.I4.7.bin
+
+=> Before perform the upgrade verfy all test is success or not. If success then run next command.
+=> Perform the upgrade 
+NEX-9K# install all nxos bootflash:nxos.7.0.3.I4.7.bin
+Do you want to continue with the installation (y/n)? [n] ---- Press Y
